@@ -17,3 +17,7 @@
     transform: scaleX(-1);
   }
 }
+
+.tabs {
+  margin-bottom: 20px;
+}
