@@ -20,6 +20,8 @@ import genres from "../../common/genres";
 import artists from "../../common/artists";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import ReactDOM from "react-dom";
+import Details from "../details/Details";
 
 const styles = (theme) => ({
   root: {
@@ -73,6 +75,13 @@ class Home extends Component {
     this.setState({ artists: event.target.value });
   };
 
+  movieClickHandler = (movieId) => {
+    ReactDOM.render(
+      <Details movieId={movieId} />,
+      document.getElementById("root")
+    );
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -102,6 +111,7 @@ class Home extends Component {
             >
               {moviesData.map((movie) => (
                 <GridListTile
+                  onClick={() => this.movieClickHandler(movie.id)}
                   className="released-movie-grid-item"
                   key={"grid" + movie.id}
                 >
