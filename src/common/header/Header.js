@@ -43,6 +43,8 @@ class Header extends Component {
       value: 0,
       userName: "",
       userNameRequired: "dispNone",
+      password: "",
+      passwordRequired: "dispNone",
     };
   }
   openModalHandler = () => {
@@ -51,6 +53,8 @@ class Header extends Component {
       value: 0,
       userNameRequired: "dispNone",
       userName: "",
+      passwordRequired: "dispNone",
+      password: "",
     });
   };
 
@@ -66,10 +70,16 @@ class Header extends Component {
     this.state.userName === ""
       ? this.setState({ userNameRequired: "dispBlock" })
       : this.setState({ userNameRequired: "dispNone" });
+    this.state.password === ""
+      ? this.setState({ passwordRequired: "dispBlock" })
+      : this.setState({ passwordRequired: "dispNone" });
   };
 
   inputUserNameChangeHandler = (e) => {
     this.setState({ userName: e.target.value });
+  };
+  inputPasswordChangeHandler = (e) => {
+    this.setState({ password: e.target.value });
   };
 
   render() {
@@ -114,9 +124,17 @@ class Header extends Component {
               </FormControl>
 
               <br />
-              <FormControl required>
+              <FormControl className={this.state.passwordRequired}>
                 <InputLabel htmlFor="password">Password</InputLabel>
-                <Input id="password" type="password" />
+                <Input
+                  id="password"
+                  type="password"
+                  password={this.state.password}
+                  onChange={this.inputPasswordChangeHandler}
+                />
+                <FormHelperText className={this.state.passwordRequired}>
+                  <span className="red">Required</span>
+                </FormHelperText>
               </FormControl>
               <br />
               <br />
