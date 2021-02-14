@@ -17,6 +17,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Checkbox from "@material-ui/core/Checkbox";
 import ListItemText from "@material-ui/core/ListItemText";
 import genres from "../../common/genres";
+import artists from "../../common/artists";
 
 const styles = (theme) => ({
   root: {
@@ -54,6 +55,7 @@ class Home extends Component {
     this.state = {
       movieName: "",
       genres: [],
+      artists: [],
     };
   }
 
@@ -64,6 +66,11 @@ class Home extends Component {
   genreSelectHandler = (event) => {
     this.setState({ genres: event.target.value });
   };
+
+  artistSelectHandler = (event) => {
+    this.setState({ artists: event.target.value });
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -136,7 +143,7 @@ class Home extends Component {
                   </InputLabel>
                   <Select
                     multiple
-                    input={<Input id="select-multiple-checkbox" />}
+                    input={<Input id="select-multiple-checkbox-genre" />}
                     renderValue={(selected) => selected.join(",")}
                     value={this.state.genres}
                     onChange={this.genreSelectHandler}
@@ -148,6 +155,38 @@ class Home extends Component {
                           checked={this.state.genres.indexOf(genre.name) > -1}
                         />
                         <ListItemText primary={genre.name} />
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+
+                <FormControl className={classes.formControl}>
+                  <InputLabel htmlFor="select-multiple-checkbox">
+                    Artists
+                  </InputLabel>
+                  <Select
+                    multiple
+                    input={<Input id="select-multiple-checkbox" />}
+                    renderValue={(selected) => selected.join(",")}
+                    value={this.state.artists}
+                    onChange={this.artistSelectHandler}
+                  >
+                    <MenuItem value="0">None</MenuItem>
+                    {artists.map((artist) => (
+                      <MenuItem
+                        key={artist.id}
+                        value={artist.first_name + " " + artist.last_name}
+                      >
+                        <Checkbox
+                          checked={
+                            this.state.artists.indexOf(
+                              artist.first_name + " " + artist.last_name
+                            ) > -1
+                          }
+                        />
+                        <ListItemText
+                          primary={artist.first_name + " " + artist.last_name}
+                        />
                       </MenuItem>
                     ))}
                   </Select>
