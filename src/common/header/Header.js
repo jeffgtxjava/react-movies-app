@@ -80,6 +80,7 @@ class Header extends Component {
               <InputLabel htmlFor="userName">Username</InputLabel>
               <Input id="userName" type="text" />
             </FormControl>
+
             <br />
             <FormControl required>
               <InputLabel htmlFor="password">Password</InputLabel>
