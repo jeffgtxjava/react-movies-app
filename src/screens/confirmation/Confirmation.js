@@ -1,9 +1,6 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
 import Header from "../../common/header/Header";
 import "./Confirmation.css";
-import BookShow from "../../screens/bookshow/BookShow";
-import Home from "../../screens/home/Home";
 import coupons from "../../common/coupons";
 import Typography from "@material-ui/core/Typography";
 import Input from "@material-ui/core/Input";
@@ -19,6 +16,7 @@ import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import green from "@material-ui/core/colors/green";
+import { Link } from "react-router-dom";
 
 const styles = (theme) => ({
   close: {
@@ -45,27 +43,18 @@ class Confirmation extends Component {
   componentDidMount() {
     let currentState = this.state;
     currentState.totalPrice = currentState.originalTotalPrice =
-      parseInt(this.props.bookingSummary.unitPrice, 10) *
-      parseInt(this.props.bookingSummary.tickets, 10);
+      parseInt(this.props.location.bookingSummary.unitPrice, 10) *
+      parseInt(this.props.location.bookingSummary.tickets, 10);
+
     this.setState({ state: currentState });
   }
-
-  backToBookShowHandler = () => {
-    ReactDOM.render(
-      <BookShow
-        id={this.props.id}
-        bookingSummary={this.props.bookingSummary}
-      />,
-      document.getElementById("root")
-    );
-  };
 
   confirmBookingHandler = () => {
     this.setState({ open: true });
   };
 
   snackBarCloseHandler = () => {
-    ReactDOM.render(<Home />, document.getElementById("root"));
+    this.props.history.push("/");
   };
 
   couponCodeChangeHandler = (e) => {
@@ -98,9 +87,9 @@ class Confirmation extends Component {
 
         <div className="confirmation marginTop16">
           <div>
-            <Typography className="back" onClick={this.backToBookShowHandler}>
-              &#60; Back to Book Show
-            </Typography>
+            <Link to={"/bookshow/" + this.props.match.params.id}>
+              <Typography className="back">&#60; Back to Book Show</Typography>
+            </Link>
             <br />
 
             <Card className="cardStyle">
@@ -116,7 +105,7 @@ class Confirmation extends Component {
                   </div>
                   <div>
                     <Typography>
-                      {this.props.bookingSummary.location}
+                      {this.props.location.bookingSummary.location}
                     </Typography>
                   </div>
                 </div>
@@ -128,7 +117,7 @@ class Confirmation extends Component {
                   </div>
                   <div>
                     <Typography>
-                      {this.props.bookingSummary.language}
+                      {this.props.location.bookingSummary.language}
                     </Typography>
                   </div>
                 </div>
@@ -140,7 +129,7 @@ class Confirmation extends Component {
                   </div>
                   <div>
                     <Typography>
-                      {this.props.bookingSummary.showDate}
+                      {this.props.location.bookingSummary.showDate}
                     </Typography>
                   </div>
                 </div>
@@ -152,7 +141,7 @@ class Confirmation extends Component {
                   </div>
                   <div>
                     <Typography>
-                      {this.props.bookingSummary.showTime}
+                      {this.props.location.bookingSummary.showTime}
                     </Typography>
                   </div>
                 </div>
@@ -163,7 +152,9 @@ class Confirmation extends Component {
                     <Typography>Tickets:</Typography>
                   </div>
                   <div>
-                    <Typography>{this.props.bookingSummary.tickets}</Typography>
+                    <Typography>
+                      {this.props.location.bookingSummary.tickets}
+                    </Typography>
                   </div>
                 </div>
                 <br />
@@ -174,7 +165,7 @@ class Confirmation extends Component {
                   </div>
                   <div>
                     <Typography>
-                      {this.props.bookingSummary.unitPrice}
+                      {this.props.location.bookingSummary.unitPrice}
                     </Typography>
                   </div>
                 </div>

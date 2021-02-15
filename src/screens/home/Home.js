@@ -20,8 +20,6 @@ import genres from "../../common/genres";
 import artists from "../../common/artists";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import ReactDOM from "react-dom";
-import Details from "../details/Details";
 
 const styles = (theme) => ({
   root: {
@@ -76,10 +74,7 @@ class Home extends Component {
   };
 
   movieClickHandler = (movieId) => {
-    ReactDOM.render(
-      <Details movieId={movieId} />,
-      document.getElementById("root")
-    );
+    this.props.history.push("/movie/" + movieId);
   };
 
   render() {
@@ -160,7 +155,6 @@ class Home extends Component {
                     value={this.state.genres}
                     onChange={this.genreSelectHandler}
                   >
-                    <MenuItem value="0">None</MenuItem>
                     {genres.map((genre) => (
                       <MenuItem key={genre.id} value={genre.name}>
                         <Checkbox
@@ -183,7 +177,6 @@ class Home extends Component {
                     value={this.state.artists}
                     onChange={this.artistSelectHandler}
                   >
-                    <MenuItem value="0">None</MenuItem>
                     {artists.map((artist) => (
                       <MenuItem
                         key={artist.id}
